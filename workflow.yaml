@@ -14,12 +14,12 @@ spec:
       steps:
         - - name: build-java
             template: build-java
-          - name: build-image
-            template: build-image
-            arguments:
-              parameters:
-                - name: tag
-                  value: "{{workflow.parameters.tag}}"
+          #- name: build-image
+          #  template: build-image
+          #  arguments:
+          #    parameters:
+          #      - name: tag
+          #        value: "{{workflow.parameters.tag}}"
 
     - name: build-java
       container:
@@ -32,23 +32,23 @@ spec:
          - name: build-script
            mountPath: /scripts
 
-    - name: build-image
-      inputs:
-        parameters:
-          - name: tag
-      container:
-        image: plugins/docker
-        env:
-          - name: PLUGIN_REPO
-            value: vansonchen/java-test
-          - name: PLUGIN_TAGS
-            value: "{{inputs.parameters.tag}}"
-          - name: PLUGIN_USERNAME
-            value: vansonchen
-          - name: PLUGIN_PASSWORD
-            value: "@Dmin123!"
-        command: [sh, -c]
-        args: ["echo 'Simulate docker plugin push' && /bin/drone-docker"]
+    #- name: build-image
+    #  inputs:
+    #    parameters:
+    #      - name: tag
+    #  container:
+    #    image: plugins/docker
+    #    env:
+    #      - name: PLUGIN_REPO
+    #        value: vansonchen/java-test
+    #      - name: PLUGIN_TAGS
+    #        value: "{{inputs.parameters.tag}}"
+    #      - name: PLUGIN_USERNAME
+    #        value: vansonchen
+    #      - name: PLUGIN_PASSWORD
+    #        value: "@Dmin123!"
+    #    command: [sh, -c]
+    #    args: ["echo 'Simulate docker plugin push' && /bin/drone-docker"]
 
   volumes:
     - name: workspace
